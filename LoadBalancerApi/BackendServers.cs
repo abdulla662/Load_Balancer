@@ -1,18 +1,17 @@
-
 public static class BackendServers
 {
-    public static readonly List<string> Servers = new List<string>
+    public static readonly List<string> Servers = new()
     {
-        "http://localhost:5001",
-        "http://localhost:5002",
-        "http://localhost:5003"
+        Environment.GetEnvironmentVariable("BACKEND1_URL") ?? "http://localhost:5001",
+        Environment.GetEnvironmentVariable("BACKEND2_URL") ?? "http://localhost:5002",
+        Environment.GetEnvironmentVariable("BACKEND3_URL") ?? "http://localhost:5003",
     };
 
-    private static int lastIndex = -1;
+    private static int _lastIndex = -1;
 
     public static string GetNextServer()
     {
-        lastIndex = (lastIndex + 1) % Servers.Count;
-        return Servers[lastIndex];
+        _lastIndex = (_lastIndex + 1) % Servers.Count;
+        return Servers[_lastIndex];
     }
 }
